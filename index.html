@@ -1,678 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Jaqueline ❤️</title>
 
-<title>Para Jaqueline ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-<style>
-/* ===== PANTALLA DE INICIO (PARA ACTIVAR AUDIO) ===== */
-#startScreen {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(#f8c8d0, #fff4f8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 20000;
-}
-
-.start-btn {
-    padding: 20px 50px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(255, 77, 77, 0.3);
-    transition: transform 0.3s, background 0.3s;
-    animation: latido 2s infinite;
-}
-
-.start-btn:hover {
-    background: #ff1a1a;
-    transform: scale(1.05);
-}
-
-@keyframes latido {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* ===== NETFLIX INTRO ===== */
-#netflixIntro {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    color: red;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    font-size: 4rem;
-    font-weight: bold;
-    z-index: 10000;
-    letter-spacing: 10px;
-}
-
-.netflix-animate {
-    animation: netflixAnim 3s forwards;
-}
-
-@keyframes netflixAnim {
-    0% { opacity:0; transform: scale(0.8);}
-    50% { opacity:1; transform: scale(1.2);}
-    100% { opacity:0; transform: scale(1);}
-}
-
-/* ===== VIDEO ===== */
-#introVideo {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: 9999;
-    display: none;
-}
-
-/* BOTÓN OMITIR VIDEO */
-#skipBtn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 10001;
-    padding: 12px 25px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    border-radius: 30px;
-    cursor: pointer;
-    display: none;
-    font-family: 'Playfair Display', sans-serif;
-}
-
-/* ===== BODY ===== */
-body {
-    margin: 0;
-    /* FONDO ACTUALIZADO AL GIF DE LA PLAYA */
-    background: url('Fondo.gif') no-repeat center center fixed;
-    background-size: cover;
-    overflow-x: hidden;
-    font-family: 'Playfair Display', serif;
-}
-
-/* ===== ÁRBOL ===== */
-.background-tree {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    display: none; /* Oculto para que no interfiera con el GIF de fondo */
-}
-
-.background-tree svg {
-    animation: viento 10s infinite ease-in-out;
-    transform-origin: bottom center;
-}
-
-@keyframes viento {
-    50% { transform: rotate(0.7deg); }
-}
-
-/* ===== CONTENIDO PRINCIPAL ===== */
-.content {
-    position: relative;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 50px;
-}
-
-/* TEXTO BIENVENIDA */
-.bienvenida {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
-    background: rgba(255,255,255,0.9);
-    padding: 20px 40px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* BOTÓN PRINCIPAL */
-.btn-inicio {
-    margin-top: 20px;
-    padding: 15px 40px;
-    background: #ff4d4d;
-    color: white;
-    border-radius: 40px;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.3s;
-    text-align: center;
-}
-
-.btn-inicio:hover {
-    background: #ff1a1a;
-}
-
-/* ===== GALERÍA COLLAGE ===== */
-.collage-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
-    padding-bottom: 100px;
-}
-
-.photo-frame {
-    background: white;
-    padding: 10px;
-    transform: rotate(-3deg);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.photo-frame:nth-child(even) {
-    transform: rotate(3deg);
-}
-
-.photo-frame:hover {
-    transform: rotate(0deg) scale(1.05);
-}
-
-.photo-frame img {
-    width: 200px;
-    height: 260px;
-    object-fit: cover;
-}
-
-.clickable-photo {
-    cursor: pointer;
-}
-
-.clickable-photo:hover {
-    box-shadow: 0 8px 25px rgba(255, 77, 77, 0.5);
-}
-
-/* ===== BOTONES EXTRAS ===== */
-
-.sidebar-letter-btn {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    padding: 20px;
-    border-radius: 0 15px 15px 0;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-    z-index: 11;
-    cursor: pointer;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
-    font-family: 'Playfair Display', serif;
-}
-
-.sidebar-letter-btn:hover {
-    left: 10px;
-}
-
-.sidebar-letter-btn .envelope-icon {
-    font-size: 2.5rem;
-    color: #ff4d4d;
-}
-
-/* MODALES DE CARTAS GENERALES */
-.letter-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    z-index: 10002;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.letter-content {
-    background: #fff8f0;
-    padding: 40px;
-    width: 100%;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    border-radius: 15px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    border: 2px solid #e6ccb3;
-}
-
-/* DISEÑO DEL MENÚ DE CARTAS (BUZÓN) */
-.letters-menu-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    margin-top: 30px;
-}
-
-.letter-btn {
-    background: #ff4d4d;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-size: 1.8rem;
-    font-family: 'Dancing Script', cursive;
-    border: none;
-    cursor: pointer;
-    width: 80%;
-    transition: transform 0.3s, background 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.letter-btn:hover {
-    transform: scale(1.05);
-    background: #ff1a1a;
-}
-
-/* BOTÓN VER VIDEO DE NUEVO */
-.replay-video-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: white;
-    padding: 15px 25px;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 11;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    transition: all 0.3s;
-}
-
-.replay-video-btn:hover {
-    transform: scale(1.05);
-}
-
-.replay-icon {
-    font-size: 1.3rem;
-}
-
-/* ===== SECCIÓN DEL ÁLBUM ===== */
-#albumSection {
-    position: relative;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 50px;
-    width: 100%;
-}
-
-.back-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #ff4d4d;
-    color: #ff4d4d;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: 'Playfair Display', serif;
-    font-weight: bold;
-    align-self: flex-start;
-    margin-left: 20px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.back-btn:hover {
-    background: #ff4d4d;
-    color: white;
-}
-
-.album-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
-    color: #ff4d4d;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px 30px;
-    border-radius: 20px;
-}
-
-.album-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    width: 90%;
-    max-width: 1000px;
-    padding-bottom: 100px;
-}
-
-.album-card {
-    background: rgba(255, 255, 255, 0.95);
-    width: calc(50% - 40px);
-    min-width: 300px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.moment-photo {
-    background: white;
-    padding: 10px;
-    align-self: center;
-    margin-bottom: 20px;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.moment-photo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(255, 77, 77, 0.3);
-}
-
-.moment-photo img {
-    width: 100%;
-    max-width: 250px;
-    height: 250px;
-    object-fit: cover;
-}
-
-.click-hint {
-    text-align: center;
-    color: #ff4d4d;
-    font-size: 0.9rem;
-    margin-top: 5px;
-    font-style: italic;
-}
-
-.moment-info {
-    font-family: 'Playfair Display', serif;
-    color: #5a3d21;
-}
-
-.moment-date {
-    font-weight: bold;
-    color: #a67c52;
-    margin-bottom: 10px;
-}
-
-.moment-desc-block {
-    font-style: italic;
-    font-size: 1.1rem;
-    line-height: 1.4;
-}
-
-/* ===== VISTA AMPLIADA DE LOS MOMENTOS ===== */
-.moment-detail-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 10005; 
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.moment-detail-content {
-    background: #fff8f0;
-    padding: 40px;
-    width: 100%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 15px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    border: 2px solid #e6ccb3;
-    text-align: center;
-}
-
-/* ===== DISEÑO ESPECÍFICO CARTA + TIRA DE FOTOS (SPLIT LAYOUT) ===== */
-.moment-detail-content.split-layout {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    text-align: left;
-    overflow: hidden;
-    max-width: 1000px;
-    width: 90%;
-}
-
-.left-letter {
-    flex: 60%;
-    padding: 40px 40px 60px 40px;
-    background-color: #ffffff;
-    overflow-y: auto; 
-    max-height: 85vh; 
-    box-sizing: border-box;
-}
-
-.right-filmstrip {
-    flex: 40%;
-    background-color: #f4ebd8; 
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    overflow-y: auto; 
-    max-height: 85vh; 
-    box-sizing: border-box;
-}
-
-.right-filmstrip img, 
-.right-filmstrip video {
-    width: 90%;
-    max-width: none;
-    height: auto;
-    border: 10px solid white;
-    border-radius: 2px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    background: black;
-    margin: 0;
-}
-
-/* BOTON CERRAR GENERAL */
-.close-modal {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 35px;
-    cursor: pointer;
-    color: #333;
-    z-index: 100;
-}
-
-.detail-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3rem;
-    color: #ff4d4d;
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-
-.proximamente-text {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-    color: #5a3d21;
-    margin-top: 40px;
-}
-
-/* ===== HOJAS Y PARTÍCULAS ===== */
-.falling-leaf {
-    position: fixed;
-    color: #FFD700;
-    animation: caer 7s linear forwards;
-    z-index: 5;
-    pointer-events: none;
-}
-
-@keyframes caer {
-    to { transform: translateY(100vh) rotate(360deg); opacity:0;}
-}
-
-.sparkle {
-    position: fixed;
-    width: 3px;
-    height: 3px;
-    background: white;
-    animation: flotar 6s linear infinite;
-    z-index: 5;
-    pointer-events: none;
-}
-
-@keyframes flotar {
-    from { transform: translateY(100vh);}
-    to { transform: translateY(-10vh);}
-}
-
-/* ===== ADAPTACIÓN A MÓVILES EXTRA ===== */
-@media (max-width: 768px) {
-    .moment-detail-content.split-layout {
-        flex-direction: column;
-    }
-    .left-letter, .right-filmstrip {
-        flex: 100%;
-        width: 100%;
-        max-height: 50vh;
-        box-sizing: border-box;
-    }
-}
-
-@media (max-width: 600px) {
-    .bienvenida { font-size: 2.5rem; }
-    #netflixIntro { font-size: 2.5rem; }
-    .sidebar-letter-btn { padding: 10px; }
-    .sidebar-letter-btn .envelope-icon { font-size: 2rem; }
-    .replay-video-btn { bottom: 20px; right: 20px; padding: 10px 15px; }
-    .album-title { font-size: 2.5rem; text-align: center; }
-    .album-card { width: 100%; }
-    .detail-title { font-size: 2.2rem; }
-    .letter-btn { font-size: 1.5rem; width: 90%; }
-}
-
-</style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-<div id="startScreen">
-    <button class="start-btn" onclick="comenzarSorpresa()">Tengo una sorpresa para ti ❤️</button>
-</div>
-
-<div id="netflixIntro">JAQUELINE</div>
-
-<video id="introVideo" playsinline>
-    <source src="videoinicio.mp4" type="video/mp4">
-    Tu navegador no soporta el formato de video.
-</video>
-
-<button id="skipBtn" onclick="iniciarHistoria()">Entrar a nuestra historia ❤️</button>
-
-<div class="background-tree">
-<svg viewBox="0 0 800 800">
-<path d="M400 800 C 380 600, 350 500, 380 350 C 420 200, 390 150, 400 50" stroke="#5a2d0c" stroke-width="20" fill="none"/>
-<path d="M380 400 C 250 300, 200 200, 250 100" stroke="#5a2d0c" stroke-width="10" fill="none"/>
-<path d="M420 400 C 550 300, 600 200, 550 100" stroke="#5a2d0c" stroke-width="10" fill="none"/>
-
-<defs>
-<path id="heart" d="M10 3 C 10 -2, 20 -2, 20 5 C 20 12, 10 15, 10 20 C 10 15, 0 12, 0 5 C 0 -2, 10 -2, 10 3 Z"/>
-</defs>
-
-<g fill="#FFD700">
-    <use href="#heart" transform="translate(200,120) scale(2)"/>
-    <use href="#heart" transform="translate(300,90) scale(2.3)"/>
-</g>
-</svg>
-</div>
-
-<div class="content" id="contenido">
-<h1 class="bienvenida">Welcome Jaqueline ❤️</h1>
-<button class="btn-inicio">Happy 9 months 💖</button>
-
-<div class="collage-container">
-<div class="photo-frame"><img src="0.jpeg"></div>
-<div class="photo-frame clickable-photo" onclick="showLettersMenu()"><img src="2.jpeg" title="Haz clic para abrir el buzón de cartas"></div>
-<div class="photo-frame clickable-photo" onclick="showAlbum()"><img src="1.jpeg" title="Haz clic para ver nuestro álbum de recuerdos"></div>
-</div>
-</div>
-
-<div class="sidebar-letter-btn" id="letterBtn" onclick="showMainLetter()">
-    <span class="envelope-icon">✉️</span>
-    <span>Mi Carta</span>
-</div>
-
-<div class="letter-modal" id="mainLetterModal">
-    <div class="letter-content">
-        <span class="close-modal" onclick="closeMainLetter()">×</span>
-        <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
-            Mi preciosa Jaqueline,<br><br>
-            Hola niña hermosa, no se como empezar te he estado extrañando todos estos dias, pero me alegra verte feliz y tranquila
-            se que pasaron muchas cosas, pero de verdad muchas, y me encanta que te estes paseando, pero bueno eso, te extraño mucho, muchisimo,
-            pero sigue divirtiendote y mandandome coasas de que haces, vetre feliz me hace feliz niña.<br><br>
-            Te amo con todo mi ser,<br>
-            Alejandro
-        </div>
+    <div id="startScreen">
+        <button class="start-btn" onclick="comenzarSorpresa()">Tengo una sorpresa para ti ❤️</button>
     </div>
-</div>
 
-<div class="letter-modal" id="lettersMenuModal">
-    <div class="letter-content" style="text-align: center; background: rgba(255, 248, 240, 0.95);">
-        <span class="close-modal" onclick="closeLettersMenu()">×</span>
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff4d4d; margin-top: 0;">Buzón de Amor 💌</h2>
-        <p style="font-family: 'Playfair Display', serif; color: #5a3d21; font-style: italic; margin-bottom: 30px;">
-            Elige un sobre para leer, mi niña hermosa.
-        </p>
+    <div id="netflixIntro">JAQUELINE</div>
+
+    <video id="introVideo" playsinline>
+        <source src="videoinicio.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+    </video>
+
+    <button id="skipBtn" onclick="iniciarHistoria()">Entrar a nuestra historia ❤️</button>
+
+    <div class="background-tree">
+        <svg viewBox="0 0 800 800">
+            <path d="M400 800 C 380 600, 350 500, 380 350 C 420 200, 390 150, 400 50" stroke="#5a2d0c" stroke-width="20" fill="none"/>
+            <path d="M380 400 C 250 300, 200 200, 250 100" stroke="#5a2d0c" stroke-width="10" fill="none"/>
+            <path d="M420 400 C 550 300, 600 200, 550 100" stroke="#5a2d0c" stroke-width="10" fill="none"/>
+            <defs>
+                <path id="heart" d="M10 3 C 10 -2, 20 -2, 20 5 C 20 12, 10 15, 10 20 C 10 15, 0 12, 0 5 C 0 -2, 10 -2, 10 3 Z"/>
+            </defs>
+            <g fill="#FFD700">
+                <use href="#heart" transform="translate(200,120) scale(2)"/>
+                <use href="#heart" transform="translate(300,90) scale(2.3)"/>
+            </g>
+        </svg>
+    </div>
+
+    <div class="content" id="contenido" style="display: none;">
+        <h1 class="bienvenida">Welcome Jaqueline ❤️</h1>
         
-        <div class="letters-menu-container">
-            <button class="letter-btn" onclick="openSpecificLetter('letterModal')">Nuestra Primera Primavera</button>
-            <button class="letter-btn" onclick="openSpecificLetter('secondLetterModal')">Un Mensaje Escondido</button>
-            <button class="letter-btn" onclick="openSpecificLetter('thirdLetterModal')">Felices 9 Meses</button>
-            <button class="letter-btn" onclick="openSpecificLetter('mainLetterModal')">Mensaje Inicial</button>
+        <button class="btn-inicio" onclick="window.open('buscador.html', '_blank')">Happy 9 months 💖</button>
+
+        <div class="collage-container">
+            <div class="photo-frame clickable-photo" onclick= "window.open('ia.html', '_blank')">
+                <img src="0.jpeg" title="Proximamente.....">
+            </div>
+            
+            <div class="photo-frame clickable-photo" onclick="showLettersMenu()">
+                <img src="2.jpeg" title="Haz clic para abrir el buzón de cartas">
+            </div>
+            
+            <div class="photo-frame clickable-photo" onclick="showAlbum()">
+                <img src="1.jpeg" title="Haz clic para ver nuestro álbum">
+            </div>
         </div>
     </div>
-</div>
 
-<div class="letter-modal" id="letterModal">
-    <div class="letter-content">
-        <span class="close-modal" onclick="closeLetter()">×</span>
-        <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
-            Mi Hermosa Jaqueline,<br><br>
+    <div class="sidebar-letter-btn" id="letterBtn" onclick="showMainLetter()">
+        <span class="envelope-icon">✉️</span>
+        <span>Mi Carta</span>
+    </div>
+
+    <div class="letter-modal" id="mainLetterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeMainLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+                Mi niña hermosa, mi bebe,<br><br>
+                No se ni por donde empezar esta vez dejare 2 cartas, espero te gusten<br>
+                Hola vida mida, Recordemos esto era por semana y mas que nada inicio para decirte cuanto te amo en mi lenguaje, la programacion.<br>
+                Y bueno sin mas nada que decir te dejo con el regalo de esta vez espero te guste tanto habra muchos cambios. esta carta es mas un recado informativo que otra cosa
+                pero, quiero aclarar todo lo que siento por ti y es que desde que apareciste cambiaste todo en mi vida, no es broma, yo creia nunca llegaria ese sueño 
+                y parece que te pedi mandada a hacer, vida mia, nunca me habia sentido tan amado, y creo que puedo hablar por los 2 cuando digo que esta es una hermosa relacion como cualquier otra 
+                hemos pasado por altibajos pero si algo define esto es que como siempre aclaramos nunca nos hemos soltado ni pasara.<br>
+                No quiero que esto sea tan largo asi que sigo en la segunda carta, Te Amo Vida Mia<br>
+                ATT: Alejandro
+            </div>
+        </div>
+    </div>
+
+    <div class="letter-modal" id="lettersMenuModal">
+        <div class="letter-content" style="text-align: center; background: rgba(255, 248, 240, 0.95);">
+            <span class="close-modal" onclick="closeLettersMenu()">×</span>
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff4d4d; margin-top: 0;">Buzón de Amor 💌</h2>
+            <p style="font-family: 'Playfair Display', serif; color: #5a3d21; font-style: italic; margin-bottom: 30px;">
+                Elige un sobre para leer, mi niña hermosa.
+            </p>
+            <div class="letters-menu-container">
+                <button class="letter-btn" onclick="openSpecificLetter('letterModal')">Nuestra Primera Primavera</button>
+                <button class="letter-btn" onclick="openSpecificLetter('secondLetterModal')">Un Mensaje Escondido</button>
+                <button class="letter-btn" onclick="openSpecificLetter('thirdLetterModal')">Felices 9 Meses</button>
+                <button class="letter-btn" onclick="openSpecificLetter('forthyLetterModal')">LA/CALIFORNIA</button>
+                <button class="letter-btn" onclick="openSpecificLetter('fiveLetterModal')">Mensaje Nuevo 2</button>
+                <button class="letter-btn" onclick="openSpecificLetter('mainLetterModal')">Mesaje Nuevo 1</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="letter-modal" id="letterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+                Mi Hermosa Jaqueline,<br><br>
+                 Mi Hermosa Jaqueline,<br><br>
+
             Dicen que la primavera es la estación donde todo renace, pero para mí, esta primera primavera juntos significa mi propio renacer. A veces escucho esa canción y siento que habla de nosotros: no me imaginé que funcionaba así, no buscaba amor, y un día te encontré.
+            Mi hermisa Jaqueline<br><br>
             Hace un año, durante meses muy oscuros, llegué a pensar en rendirme e irme de aquí. Hoy entiendo perfectamente por qué no lo hice: estaba vivo, pero con vos comencé a vivir. Si ese día no me morí, es porque aún me faltaba experimentar este "nosotros". A mi vida siempre le hizo falta algo, un vacío que no entendía, y hoy por fin lo tengo. Eres tú. Eres esa bendición por la que me queda agradecer, ese cometa que tuve suerte de presenciar y ese cuento del que no quiero saber el final.
             Desde que estoy contigo he aprendido muchísimo. Lograste comprender lo que ni yo entendí de mí mismo. Me haces sentir tan amado que, gracias a ti, por fin sé que puedo y merezco ser amado. Te has convertido en mi motor de vida. A lo largo de estos últimos meses, a pesar de las complicaciones, siempre me he sentido aliviado, tranquilo y lleno de una paz inmensa. Me hiciste ser mejor.
             Sé que tu alma es viajera, y ahora que pronto emprenderás tu aventura a Colombia, quiero que te lleves esta promesa contigo: sin importar dónde estés, si algún día de estos se hace gris tu cielo, lo pintaré mirando un río, las lágrimas y el frío te hicieron de hielo, daré la piel pa' servir de abrigo.
@@ -681,339 +117,267 @@ body {
             Gracias por tanto vida mia, aun nos falta mucho por recorrer pero siempre, siempre juntos.<br><br>
             Con todo amor,<br>
             Alejandro
+            </div>
         </div>
     </div>
-</div>
 
-<div class="letter-modal" id="secondLetterModal">
-    <div class="letter-content">
-        <span class="close-modal" onclick="closeSecondLetter()">×</span>
-        <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
-         Esto se supone esta escondido, y espero lo encuentres antes de la otra sorpresa jJAJJJAJJA, Pista por si ya lo encontraste es un album de fotos JIJIJI,<br><br>
-         Pero bueno continuando, eres la mejor esto como te dije se actualizara cada semana ahora me mame un poco pero aun te falta muchisimo por ver, y espero estar a la talla para que nunca te lo esperes.<br><br>
-         Te amo mucho eres mi vida nunca lo olvides y estoy muy orgulloso de ti vida mia, asi, tranquila veras que si te iras a colombia se que no hiciste lo de la firma pero se solucionara te amoooo<br><br>
-            Te amo,<br>
-            Alejandro
+    <div class="letter-modal" id="secondLetterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeSecondLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+               Esto se supone esta escondido, y espero lo encuentres antes de la otra sorpresa jJAJJJAJJA, Pista por si ya lo encontraste es un album de fotos JIJIJI,<br><br>
+                Pero bueno continuando, eres la mejor esto como te dije se actualizara cada semana ahora me mame un poco pero aun te falta muchisimo por ver, y espero estar a la talla para que nunca te lo esperes.<br><br>
+                Te amo mucho eres mi vida nunca lo olvides y estoy muy orgulloso de ti vida mia, asi, tranquila veras que si te iras a colombia se que no hiciste lo de la firma pero se solucionara te amoooo<br><br>
+                Te amo,<br>
+                Alejandro
+            </div>
         </div>
     </div>
-</div>
 
-<div class="letter-modal" id="thirdLetterModal">
-    <div class="letter-content">
-        <span class="close-modal" onclick="closeThirdLetter()">×</span>
-        <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
-            Mi niña hermosa,<br><br>
+    <div class="letter-modal" id="thirdLetterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeThirdLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+                Mi niña hermosa,<br><br>
+                <br><br>
+                Cada día que pasa me doy cuenta de lo afortunado que soy. Celebrar estos 9 meses a tu lado es solo el principio de todo lo que quiero vivir contigo. Desde aquel 9 de junio de nuestra primera cita, mi vida cambió de una forma que ni en mis mejores sueños pude haber imaginado. Te volviste mi paz, mi locura favorita y mi salvación.<br><br>
+                  Sé que se vienen retos, como esos dos meses que estarás estudiando en Colombia. Quiero que te vayas con la total certeza de que la distancia física no es nada comparada con lo inmenso que siento por ti. Estoy tan orgulloso de la mujer en la que te estás convirtiendo, de cómo luchas por tu carrera y tus sueños. Eres mi inspiración.<br><br>
+                  Aquí estaré esperándote, apoyándote a cada paso, a cada kilómetro, y contando los días, las horas y los segundos para volver a abrazarte. Eres mi hogar y mi refugio, Jaqueline. Gracias por estos 9 meses de felicidad absoluta.<br><br>
+                  Te amo infinitamente,<br>Alejandro
+            </div>
+        </div>
+    </div>
+
+    <div class="letter-modal" id="forthyLetterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeForthyLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+                Mi niña hermosa,<br><br>
             Cada día que pasa me doy cuenta de lo afortunado que soy. Celebrar estos 9 meses a tu lado es solo el principio de todo lo que quiero vivir contigo. Desde aquel 9 de junio de nuestra primera cita, mi vida cambió de una forma que ni en mis mejores sueños pude haber imaginado. Te volviste mi paz, mi locura favorita y mi salvación.<br><br>
             Sé que se vienen retos, como esos dos meses que estarás estudiando en Colombia. Quiero que te vayas con la total certeza de que la distancia física no es nada comparada con lo inmenso que siento por ti. Estoy tan orgulloso de la mujer en la que te estás convirtiendo, de cómo luchas por tu carrera y tus sueños. Eres mi inspiración.<br><br>
             Aquí estaré esperándote, apoyándote a cada paso, a cada kilómetro, y contando los días, las horas y los segundos para volver a abrazarte. Eres mi hogar y mi refugio, Jaqueline. Gracias por estos 9 meses de felicidad absoluta.<br><br>
             Te amo infinitamente,<br>
             Alejandro
+            </div>
         </div>
     </div>
-</div>
+    <div class="letter-modal" id="fiveLetterModal">
+        <div class="letter-content">
+            <span class="close-modal" onclick="closeFiveLetter()">×</span>
+            <div class="letter-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; line-height: 1.6; color: #5a3d21;">
+                Amada mia<br><br>
+                Esta es la segunda carta y bueno, ambos sabemos lo que estamos pasando, si antes pasabamos por una caida estamos meramente en un abismo<br>
+                Es la primera vez que no tengo palabras no se como expresarme, no se como actuar ante esta situacion, se que nos amamos muhco y que todo podremos superarlo<br>
+                Pero se que ambos nos tendremos que esforzar, pues no creo ninguno de los 2 quiera tirar la toalla, se que ambos como equipo podremos superar esto, esto te lo escribo con el corazon<br>
+                Perdon por ser bruto, por no ser lo que al inicio pensabas que era, no soy perfecto soy humano, y muchas veces me equivoco, pero lo que se es que te amo, y no te quiero soltar<br>
+                Esto sera muy dificil, pero podremos confio en que podremos, perdon por fallarte tanto, aveces desde lo mas profundo de mi corazon siento que te hago mas mal que bien<br>
+                Y me pone triste verte mal y mas por que sea mi culpa, se que estoy trabajando en lo que te dije que trabajaria para mejorar y no equivocarme de nuevo, quiero esto de verdad<br>
+                Quiero todo contigo, y solo tengo una pregunta y quiero me la respondas en persona ¿Quieres esto conmigo, aun quieres ser tu mi esposa, quieres seguir en mi vida, quieres seguir compartiendo tu vida conmigo, quieres ser la madre de mis hijos quieres esto tanto como yo?<br>
+                Se que no fue una pregunta fueron un chingo pero hay muchas cosas que pasan por mi mente y no puedo darles claridad al 100%, solamente quiero tu respuesta te amo<br>
+                ATT: Alejandro
+            </div>
+        </div>
+    </div>
 
-<div id="albumSection">
-    <button class="back-btn" onclick="hideAlbum()">← Volver al collage</button>
-    <h1 class="album-title">Momentos Inolvidables ❤️</h1>
-    
-    <div class="album-grid">
+    <div id="albumSection">
+        <button class="back-btn" onclick="hideAlbum()">← Volver al collage</button>
+        <h1 class="album-title">Momentos Inolvidables ❤️</h1>
         
-        <div class="album-card">
-            <div class="moment-photo photo-frame" onclick="openMomentDetail('detail1')">
-                <img src="moment1.jpeg">
-                <p class="click-hint">DAY ONE</p>
+        <div class="album-grid">
+            <div class="album-card">
+                <div class="moment-photo photo-frame" onclick="openMomentDetail('detail1')">
+                    <img src="moment1.jpeg">
+                    <p class="click-hint">DAY ONE</p>
+                </div>
+                <div class="moment-info">
+                    <p class="moment-date">1/07/2025</p>
+                    <p class="moment-desc-block">El dia mas hermoso de mi vida, pues te pedi te volvieras parte de mi vida. </p>
+                </div>
             </div>
-            <div class="moment-info">
-                <p class="moment-date">1/07/2025</p>
-                <p class="moment-desc-block">El dia mas hermoso de mi vida, pues te pedi te volvieras parte de mi vida. </p>
-            </div>
-        </div>
 
-        <div class="album-card">
-            <div class="moment-photo photo-frame" onclick="openMomentDetail('detail2')">
-                <img src="moment2.jpeg">
-                <p class="click-hint">La Barranca</p>
+            <div class="album-card">
+                <div class="moment-photo photo-frame" onclick="openMomentDetail('detail2')">
+                    <img src="moment2.jpeg">
+                    <p class="click-hint">La Barranca</p>
+                </div>
+                <div class="moment-info">
+                    <p class="moment-date">22/07/2025</p>
+                    <p class="moment-desc-block">Aqui entendi que haria todo por ti, hasta por encima de mi mismo.</p>
+                </div>
             </div>
-            <div class="moment-info">
-                <p class="moment-date">22/07/2025</p>
-                <p class="moment-desc-block">Aqui entendi que haria todo por ti, hasta por encima de mi mismo.</p>
-            </div>
-        </div>
 
-        <div class="album-card">
-            <div class="moment-photo photo-frame" onclick="openMomentDetail('detail3')">
-                <img src="moment3.jpeg">
-                <p class="click-hint">Tu Primer Ramo</p>
+            <div class="album-card">
+                <div class="moment-photo photo-frame" onclick="openMomentDetail('detail3')">
+                    <img src="moment3.jpeg">
+                    <p class="click-hint">Tu Primer Ramo</p>
+                </div>
+                <div class="moment-info">
+                    <p class="moment-date">13/06/2025</p>
+                    <p class="moment-desc-block">El Primer Viernes 13</p>
+                </div>
             </div>
-            <div class="moment-info">
-                <p class="moment-date">13/06/2025</p>
-                <p class="moment-desc-block">El Primer Viernes 13</p>
+            <div class="album-card">
+                <div class="moment-photo photo-frame" onclick="openMomentDetail('detail4')">
+                    <img src="moment4.jpeg">
+                    <p class="click-hint">Acuario date</p>
+                </div>
+                <div class="moment-info">
+                    <p class="moment-date">1/07/2025</p>
+                    <p class="moment-desc-block">De las mejores citas. </p>
+                </div>
             </div>
-        </div>
 
+            <div class="album-card">
+                <div class="moment-photo photo-frame" onclick="openMomentDetail('detail5')">
+                    <img src="moment5.jpeg">
+                    <p class="click-hint">Primera cita no cita.</p>
+                </div>
+                <div class="moment-info">
+                    <p class="moment-date">8/06/2025</p>
+                    <p class="moment-desc-block">Donde me dije me voy a enamorar perdidamente </p>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 
-<div class="moment-detail-modal" id="detail1">
-    <div class="moment-detail-content split-layout">
-        <span class="close-modal" onclick="closeMomentDetail('detail1')">×</span>
-        <div class="left-letter">
-            <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Cariño</h2>
-            <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
-                <p>Si cierro los ojos, todavía puedo sentir la adrenalina de esa mañana. Recuerdo el caos de correr buscando esos Legos de F1 que nunca aparecieron, la decisión de armar yo mismo esos llaveros con mis manos para darte algo único, y las prisas en el tren para intentar ganarle al tiempo.</p>
+    <div class="moment-detail-modal" id="detail1">
+        <div class="moment-detail-content split-layout">
+            <span class="close-modal" onclick="closeMomentDetail('detail1')">×</span>
+            <div class="left-letter">
+                <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Cariño</h2>
+                <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
+                     <p>Si cierro los ojos, todavía puedo sentir la adrenalina de esa mañana. Recuerdo el caos de correr buscando esos Legos de F1 que nunca aparecieron, la decisión de armar yo mismo esos llaveros con mis manos para darte algo único, y las prisas en el tren para intentar ganarle al tiempo.</p>
                 <p>Todavía me sonrío al recordar que terminé bañándome con un garrafón de agua en casa de mi abuela porque no tenía mis llaves ni agua en mi colonia JAJAJA. Todo parecía ir en contra, pero nada de ese desorden importaba, porque al final del camino estabas tú.</p>
                 <p>Incluso en el cine, cuando el miedo me hizo dudar, decidí que tú valías cualquier riesgo. Por eso, cuando rodeé el parque a escondidas, mientras te dije sigue grabando, y llegar con mis zapatos llenos de lodo JAJAJJA, te hice la pregunta, el mundo entero se quedó en silencio.</p>
                 <p>Al decirte "te amo" y escuchar por primera vez tu <strong>"te amo"</strong> de vuelta mientras me mirabas a los ojos, sentí una paz que nunca había conocido. En ese segundo, en medio de ese parque, me hice una promesa: <em>"Es ella. Siempre será ella"</em>.</p>
                 <p>Gracias por elegirme y por convertir ese caos en la historia más bonita de mi vida.</p>
-                <p style="font-weight: bold; margin-top: 30px;">Con todo mi amor, Alejandro</p>
+                    <p style="font-weight: bold; margin-top: 30px;">Con todo mi amor, Alejandro</p>
+                </div>
+            </div>
+            <div class="right-filmstrip">
+                <img src="m1_foto1.jpeg" alt="Nuestro primer día">
+                <video controls playsinline><source src="video1.mp4" type="video/mp4"></video>
+                <video controls playsinline><source src="video2.mp4" type="video/mp4"></video>
+                <img src="m1_foto2.jpeg" alt="Momento especial">
             </div>
         </div>
-        <div class="right-filmstrip">
-            <img src="m1_foto1.jpeg" alt="Nuestro primer día">
-            <video controls playsinline><source src="video1.mp4" type="video/mp4"></video>
-            <video controls playsinline><source src="video2.mp4" type="video/mp4"></video>
-            <img src="m1_foto2.jpeg" alt="Momento especial">
-        </div>
     </div>
-</div>
 
-<div class="moment-detail-modal" id="detail2">
-    <div class="moment-detail-content split-layout">
-        <span class="close-modal" onclick="closeMomentDetail('detail2')">×</span>
-        <div class="left-letter">
-            <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Nuestra Aventura</h2>
-            <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
-                <p>Mi Junnice Hermosa</p>
-                <p>Ese día en la Barranca de Huentitán es uno que jamás voy a olvidar. Lo que empezó como una expedición de "runners" (o al menos eso intentamos, jajaja) terminó siendo el momento exacto en el que me di cuenta de la inmensidad de lo que siento por ti.</p>
-                <p>Verte tan agotada, cuando te deshidrataste, y sintiendo que casi te desmayabas, me llenó de muchísima angustia. Pero al mismo tiempo, despertó en mí un instinto protector que ni yo sabía que tenía. Cuando vi a mi princesa con sed y mareada, supe sin dudarlo que haría cualquier cosa por verte bien.</p>
-                <p>Si tenía que volver a subir corriendo por agua, lo iba a hacer mil veces si era necesario. Aquel día, entre el calor y el cansancio extremo, entendí que mi amor por ti va más allá de los momentos fáciles. Significa cuidarte cuando te faltan las fuerzas, cargarte de caballito si es necesario para cruzar el camino, y ponerte a ti incluso por encima de mí mismo.</p>
-                <p>Gracias por esa aventura y por dejarme cuidarte. No importa qué tan empinada sea la subida en esta vida, siempre voy a estar ahí para darte agua, abrazarte y asegurarme de que lleguemos juntos a la cima.</p>
-                <p style="font-weight: bold; margin-top: 30px;">Te amo infinitamente, Alejandro</p>
+    <div class="moment-detail-modal" id="detail2">
+        <div class="moment-detail-content split-layout">
+            <span class="close-modal" onclick="closeMomentDetail('detail2')">×</span>
+            <div class="left-letter">
+                <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Nuestra Aventura</h2>
+                <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
+                    <p>Mi Junnice Hermosa</p>
+                    <p>Ese día en la Barranca de Huentitán es uno que jamás voy a olvidar. Lo que empezó como una expedición de "runners" (o al menos eso intentamos, jajaja) terminó siendo el momento exacto en el que me di cuenta de la inmensidad de lo que siento por ti.</p>
+                    <p>Verte tan agotada, cuando te deshidrataste, y sintiendo que casi te desmayabas, me llenó de muchísima angustia. Pero al mismo tiempo, despertó en mí un instinto protector que ni yo sabía que tenía. Cuando vi a mi princesa con sed y mareada, supe sin dudarlo que haría cualquier cosa por verte bien.</p>
+                    <p>Si tenía que volver a subir corriendo por agua, lo iba a hacer mil veces si era necesario. Aquel día, entre el calor y el cansancio extremo, entendí que mi amor por ti va más allá de los momentos fáciles. Significa cuidarte cuando te faltan las fuerzas, cargarte de caballito si es necesario para cruzar el camino, y ponerte a ti incluso por encima de mí mismo.</p>
+                    <p>Gracias por esa aventura y por dejarme cuidarte. No importa qué tan empinada sea la subida en esta vida, siempre voy a estar ahí para darte agua, abrazarte y asegurarme de que lleguemos juntos a la cima.</p>
+                    <p style="font-weight: bold; margin-top: 30px;">Te amo infinitamente, Alejandro</p>
+                </div>
+            </div>
+            <div class="right-filmstrip">
+                <img src="m2_foto4.jpeg" alt="Abrazo en la barranca">
+                <img src="m2_foto1.jpeg" alt="En el puente">
+                <video controls playsinline><source src="m2_video1.mp4" type="video/mp4"></video>
+                <img src="m2_foto2.jpeg" alt="Cargándote de caballito">
+                <img src="m2_foto3.jpeg" alt="Besos con paisaje">
+                <video controls playsinline><source src="m2_video2.mp4" type="video/mp4"></video>
+                <img src="m2_foto5.jpeg" alt="Cruzando cargando">
+                <img src="m2_foto6.jpeg" alt="Foto con amigos">
             </div>
         </div>
-        <div class="right-filmstrip">
-            <img src="m2_foto4.jpeg" alt="Abrazo en la barranca">
-            <img src="m2_foto1.jpeg" alt="En el puente">
-            <video controls playsinline><source src="m2_video1.mp4" type="video/mp4"></video>
-            <img src="m2_foto2.jpeg" alt="Cargándote de caballito">
-            <img src="m2_foto3.jpeg" alt="Besos con paisaje">
-            <video controls playsinline><source src="m2_video2.mp4" type="video/mp4"></video>
-            <img src="m2_foto5.jpeg" alt="Cruzando cargando">
-            <img src="m2_foto6.jpeg" alt="Foto con amigos">
-        </div>
     </div>
-</div>
 
-<div class="moment-detail-modal" id="detail3">
-    <div class="moment-detail-content split-layout">
-        
-        <span class="close-modal" onclick="closeMomentDetail('detail3')">×</span>
-        
-        <div class="left-letter">
-            <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Viernes 13</h2>
-            
-            <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
-                <p>Mi hermosa niña,</p>
-                
-                <p>Debes poner primero la cancion que aparece en la foto Jiji ahora si te dejo con la carta pero si hazlo porfi</p>
-
-                <p>Dicen que los viernes 13 son de mala suerte, pero desde que te conocí, mi suerte cambió por completo. Ese 13 de junio de 2025 quería hacer algo verdaderamente especial para ti.</p>
-
-                <p>Entregarte ese Nuestro primer ramo fue precioso, Ver tu sonrisa al recibir esas flores es algo que se quedó grabado en mi memoria para siempre. Fue un pequeño detalle, pero cargado de todo el sentimiento que ya estaba creciendo en mí para demostrarte lo mucho que me importas y lo especial que eres.</p>
-
-                <p>Estaba planeando este momento por mucho tiempo, desde nuestra primer cita que lo planeaba, y es que como me arrepiento de esa primer cita no regalarte flores, pero despues de todo me alegra que este NOSOTROS funcionara.</p>
-                    
-                <p>Espero poder regalarte muchísimos ramos más, en muchos más viernes 13, y seguir llenando cada uno de tus días de colores, amor y muchísima alegría.</p>
-                
-                <p style="font-weight: bold; margin-top: 30px;">Te amo con todo mi corazón, Alejandro</p>
+    <div class="moment-detail-modal" id="detail3">
+        <div class="moment-detail-content split-layout">
+            <span class="close-modal" onclick="closeMomentDetail('detail3')">×</span>
+            <div class="left-letter">
+                <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Viernes 13</h2>
+                <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
+                    <p>Mi hermosa niña,</p>
+                    <p>Debes poner primero la cancion que aparece en la foto Jiji ahora si te dejo con la carta pero si hazlo porfi</p>
+                    <p>Dicen que los viernes 13 son de mala suerte, pero desde que te conocí, mi suerte cambió por completo. Ese 13 de junio de 2025 quería hacer algo verdaderamente especial para ti.</p>
+                    <p>Entregarte ese Nuestro primer ramo fue precioso, Ver tu sonrisa al recibir esas flores es algo que se quedó grabado en mi memoria para siempre. Fue un pequeño detalle, pero cargado de todo el sentimiento que ya estaba creciendo en mí para demostrarte lo mucho que me importas y lo especial que eres.</p>
+                    <p>Estaba planeando este momento por mucho tiempo, desde nuestra primer cita que lo planeaba, y es que como me arrepiento de esa primer cita no regalarte flores, pero despues de todo me alegra que este NOSOTROS funcionara.</p>
+                    <p>Espero poder regalarte muchísimos ramos más, en muchos más viernes 13, y seguir llenando cada uno de tus días de colores, amor y muchísima alegría.</p>
+                    <p style="font-weight: bold; margin-top: 30px;">Te amo con todo mi corazón, Alejandro</p>
+                </div>
+            </div>
+            <div class="right-filmstrip">
+                <img src="moment3.jpeg" alt="Tu primer ramo">
+                <img src="m3_foto1.jpeg" alt="Recuerdo del ramo">
             </div>
         </div>
-
-        <div class="right-filmstrip">
-            <img src="moment3.jpeg" alt="Tu primer ramo">
-            <img src="m3_foto1.jpeg" alt="Recuerdo del ramo">
-        </div>
-
     </div>
-</div>
 
-<div class="replay-video-btn" id="replayBtn" onclick="replayVideo()">
-    <span class="replay-icon">🔄</span>
-    <span>Ver Video de Nuevo</span>
-</div>
+    <div class="moment-detail-modal" id="detail4">
+        <div class="moment-detail-content split-layout">
+            <span class="close-modal" onclick="closeMomentDetail('detail4')">×</span>
+            <div class="left-letter">
+                <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Cariño</h2>
+                <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
+                    <p>JAJJAJAJ, todavia recuerdo esa cita como odio haber perdido todas las fotos y videos de este dia, si te recuerdo tu planeaste esta cita y me encanto..</p>
+                    <p>Amor, hay tantas cosas de este dia, pero tu carita de felcidad viendo las nutrias es lo mas hermoso, cada que la recuerdo me da un sentir muy bonito ando buscando un video espero encontrarlo.</p>
+                    <p>Niña nmchs estuvimos por todos lados y aun que no te gustan entraste conmigo a ver los pajaros, y es vdd aun nos falta pelearnos en un gotcha que ese dia no se pudo. <strong>"te amo"</strong>...</p>
+                    <p>Y bueno sin mas que decir, gracias por esos momentos tan hermosos, gracias por tanto vida mia, espero poder seguirte haciendo feliz</p>
+                    <p style="font-weight: bold; margin-top: 30px;">Con todo mi amor, Alejandro</p>
+                </div>
+            </div>
+            <div class="right-filmstrip">
+                <img src="m4_foto1.jpeg" alt="Acuario">
+                <img src="m4_foto2.jpeg" alt="Nuestra mejor cita">
+                <video controls playsinline><source src="m4_video1.mp4" type="video/mp4"></video>
+                <img src="m4_foto3.jpeg" alt="Gracias por tantos momentos">
+                <video controls playsinline><source src="m4_video2.mp4" type="video/mp4"></video>
+                <img src="m4_foto4.jpeg" alt="Desde ahi me dejaste claro tu amor por mi">
+                <img src="m4_foto5.jpeg" alt="Me senti muy amado ese dia">
+            </div>
+        </div>
+    </div>
 
-<audio id="musicaAC" loop>
-    <source src="musicaAC.mp3" type="audio/mpeg">
-</audio>
+    <div class="moment-detail-modal" id="detail5">
+        <div class="moment-detail-content split-layout">
+            <span class="close-modal" onclick="closeMomentDetail('detail5')">×</span>
+            <div class="left-letter">
+                <h2 class="detail-title" style="font-size: 3.5rem; color: #000; margin-bottom: 20px;">Cariño</h2>
+                <div class="detail-text" style="font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #000; line-height: 1.5;">
+                    <p>Si bueno esta es nuestra primer cita no cita y buenooooooo pasaron muchas cosas, expresar todo en esta carta estaria complicado y un poco tardado, pero trata de desglosar las cosas mas importantes</p>
+                    <p>Recuerdo los nervios de verte, sabia que no era una simple salida de amigos, algo de mi decia que tenia que llegar con flores para ti, y aun me arrepiento de no hacerlo, aun que esperar hasta ese viernes 13 siento fue mas iconico y bonito</p>
+                    <p>Pero si aglo me queda es lo hermosa que te veias y aun que siempre digo que no tenia miedo de salir contigo si me daba miedo, pero hay que ser valientes y trate de serlo, me arme de valor y terminando la cita ambos sentimos esa chispa</p>
+                    <p>Es algo dificil de explicar decir que pasamos de amigos a novios en un dia, y bueno asi fue, pues ambos nos sentimos amados, y en toda la salida para nosotros fue otro nivel de conexion.</p>
+                    <p>llegano al final se ese dia antes de ese beso, recuerdo decirte no quiero algo pasajero, y despues del beso te pregunte "¿tu que quieres?, ¿algo bien, algo casual?, y me respondiste algo bien contigo, acordamos ir lento y bueenoooo</p>
+                    <p>A las semanas ya queria pedirte ser mi novia que cosas JAJAJJA, pero bueno ese dia recuerdo en mi mente sonaba una cancion y me daba miedo, me daba miedo enamorarme y que saliera mal de nuevo, eso me aterraba, y en mi mente solo sonaba un "Estoy enamorado"</p>
+                    <p>Como dije esto seria largo hay muchas cosas por decir y no alcanzo a poner todo en una sola carta pero bueno, te escribire mas sobre este dia Te amo niña</p>
+                    <p style="font-weight: bold; margin-top: 30px;">De: El amor de tu vida, Alejandro</p>
+                </div>
+            </div>
+            <div class="right-filmstrip">
+                <img src="m5_foto1.jpeg" alt="Desde ahi entendi que habia alguien para mi">
+                <video controls playsinline><source src="m5_video1.mp4" type="video/mp4"></video>
+                <img src="m5_foto2.jpeg" alt="Me enamore">
+                <video controls playsinline><source src="m5_video2.mp4" type="video/mp4"></video>
+                <img src="m5_foto3.jpeg" alt="Recuerdo">
+            </div>
+        </div>
+    </div>
 
-<audio id="musicaGR" loop>
-    <source src="musicaGR.mp3" type="audio/mpeg">
-</audio>
+    <div class="replay-video-btn" id="replayBtn" onclick="replayVideo()">
+        <span class="replay-icon">🔄</span>
+        <span>Ver Video de Nuevo</span>
+    </div>
 
-<script>
-function comenzarSorpresa() {
-    document.getElementById('startScreen').style.display = 'none';
-    
-    const netflix = document.getElementById('netflixIntro');
-    netflix.style.display = 'flex';
-    netflix.classList.add('netflix-animate');
+    <audio id="musicaAC" loop>
+        <source src="musicaAC.mp3" type="audio/mpeg">
+    </audio>
 
-    setTimeout(()=>{
-        netflix.style.display = 'none';
-        
-        const video = document.getElementById('introVideo');
-        video.style.display = 'block';
-        video.play();
+    <audio id="musicaGR" loop>
+        <source src="musicaGR.mp3" type="audio/mpeg">
+    </audio>
 
-        setTimeout(()=>{
-            document.getElementById('skipBtn').style.display='block';
-        }, 3000);
-
-    }, 3000);
-}
-
-function iniciarHistoria(){
-    const video = document.getElementById('introVideo');
-    video.pause();
-    video.style.display = 'none';
-
-    document.getElementById('skipBtn').style.display = 'none';
-    
-    document.getElementById('contenido').style.display = 'flex';
-    document.getElementById('letterBtn').style.display = 'flex'; 
-    document.getElementById('replayBtn').style.display = 'flex'; 
-    
-    // Inicia la música de las cartas/inicio
-    document.getElementById('musicaAC').play();
-}
-
-function showMainLetter() { 
-    document.getElementById('mainLetterModal').style.display = 'flex'; 
-}
-function closeMainLetter() { 
-    document.getElementById('mainLetterModal').style.display = 'none'; 
-}
-
-function showLettersMenu() { 
-    document.getElementById('lettersMenuModal').style.display = 'flex'; 
-}
-function closeLettersMenu() { 
-    document.getElementById('lettersMenuModal').style.display = 'none'; 
-}
-
-function openSpecificLetter(modalId) {
-    closeLettersMenu();
-    document.getElementById(modalId).style.display = 'flex';
-}
-
-function closeLetter() { document.getElementById('letterModal').style.display = 'none'; }
-function closeSecondLetter() { document.getElementById('secondLetterModal').style.display = 'none'; }
-function closeThirdLetter() { document.getElementById('thirdLetterModal').style.display = 'none'; }
-
-function showAlbum() {
-    document.getElementById('contenido').style.display='none';
-    document.getElementById('letterBtn').style.display='none'; 
-    document.getElementById('replayBtn').style.display='none'; 
-    document.getElementById('albumSection').style.display='flex';
-    
-    // Cambia la música a la de la galería
-    document.getElementById('musicaAC').pause();
-    document.getElementById('musicaGR').play();
-}
-
-function hideAlbum() {
-    document.getElementById('albumSection').style.display='none';
-    document.getElementById('contenido').style.display='flex';
-    document.getElementById('letterBtn').style.display='flex'; 
-    document.getElementById('replayBtn').style.display='flex'; 
-    
-    // Regresa a la música de inicio
-    document.getElementById('musicaGR').pause();
-    document.getElementById('musicaAC').play();
-}
-
-function openMomentDetail(modalId) {
-    document.getElementById(modalId).style.display = 'flex';
-}
-
-function closeMomentDetail(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    let modal = document.getElementById(modalId);
-    let videos = modal.getElementsByTagName("video");
-    for (let i = 0; i < videos.length; i++) {
-        videos[i].pause();
-    }
-}
-
-window.onclick = function(event) {
-    const modals = [
-        'mainLetterModal', 'lettersMenuModal', 'letterModal', 'secondLetterModal', 'thirdLetterModal',
-        'detail1', 'detail2', 'detail3'
-    ];
-    
-    modals.forEach(id => {
-        let modal = document.getElementById(id);
-        if (event.target == modal) {
-            modal.style.display = "none";
-            let videos = modal.getElementsByTagName("video");
-            for (let i = 0; i < videos.length; i++) {
-                videos[i].pause();
-            }
-        }
-    });
-}
-
-function replayVideo() {
-    document.getElementById('contenido').style.display='none';
-    document.getElementById('albumSection').style.display='none'; 
-    document.getElementById('letterBtn').style.display='none';
-    document.getElementById('replayBtn').style.display='none';
-    
-    const modals = ['mainLetterModal', 'lettersMenuModal', 'letterModal', 'secondLetterModal', 'thirdLetterModal', 'detail1', 'detail2', 'detail3'];
-    modals.forEach(id => {
-        let modal = document.getElementById(id);
-        modal.style.display = 'none';
-        let videos = modal.getElementsByTagName("video");
-        for (let i = 0; i < videos.length; i++) {
-            videos[i].pause();
-        }
-    });
-
-    // Detener ambas pistas de música
-    const musicaAC = document.getElementById('musicaAC');
-    musicaAC.pause();
-    musicaAC.currentTime = 0;
-    
-    const musicaGR = document.getElementById('musicaGR');
-    musicaGR.pause();
-    musicaGR.currentTime = 0;
-
-    const video = document.getElementById('introVideo');
-    video.currentTime = 0;
-    video.style.display = 'block';
-    video.play();
-
-    document.getElementById('skipBtn').style.display='block';
-}
-
-setInterval(()=>{
-    let hoja=document.createElement('div');
-    hoja.className='falling-leaf';
-    hoja.innerHTML='🍂';
-    hoja.style.left=(200+Math.random()*400)+'px';
-    document.body.appendChild(hoja);
-    setTimeout(()=>hoja.remove(),7000);
-},500);
-
-setInterval(()=>{
-    let s=document.createElement('div');
-    s.className='sparkle';
-    s.style.left=Math.random()*100+'vw';
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),6000);
-},300);
-
-</script>
+    <script src="main.js"></script>
 
 </body>
 </html>
