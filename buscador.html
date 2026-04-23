@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Especial</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fdfdfd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ===== MODAL DE SALUDO INICIAL ===== */
+        #modal-saludo {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-caja {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 400px;
+            width: 90%;
+            animation: aparecer 0.5s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-caja h1 {
+            font-family: 'Playfair Display', serif;
+            color: #e50914;
+            margin-top: 0;
+        }
+
+        .modal-caja p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .btn-modal {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-modal:hover {
+            background: #b20710;
+        }
+
+        /* ===== ESTILOS DEL BUSCADOR ===== */
+        #contenedor-buscador {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 15vh;
+            transition: opacity 0.5s;
+        }
+
+        .logo-google {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: bold;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        .letra-1 { color: #4285F4; } 
+        .letra-2 { color: #EA4335; } 
+        .letra-3 { color: #FBBC05; } 
+        .letra-4 { color: #4285F4; } 
+        .letra-5 { color: #34A853; } 
+        .letra-6 { color: #EA4335; } 
+
+        .barra-busqueda {
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 10px 20px;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+        }
+
+        .icono-lupa {
+            font-size: 1.2rem;
+            color: #9aa0a6;
+            margin-right: 15px;
+        }
+
+        .barra-busqueda input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.2rem;
+            color: #202124;
+            background: transparent;
+        }
+
+        /* ===== ESTILOS DEL CHATBOT DE TRIVIA ===== */
+        #contenedor-chat {
+            display: none;
+            flex-direction: column;
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            margin-top: 5vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+            animation: aparecer 0.8s ease-out;
+        }
+
+        .chat-header {
+            background: #e50914;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .chat-mensajes {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fafafa;
+        }
+
+        .mensaje {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .bot-msg {
+            background: #f1f0f0;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-msg {
+            background: #e50914;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-enviar-chat {
+            background: #e50914;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .btn-enviar-chat:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="modal-saludo">
+        <div class="modal-caja">
+            <h1>¡Hola Jaqueline! ❤️</h1>
+            <p>Tengo una sorpresa para ti, pero primero tendremos que jugar un poco...<br><br>¿Estás lista para un reto sobre nosotros?</p>
+            <button class="btn-modal" onclick="iniciarBuscador()">Sí, acepto el reto</button>
+        </div>
+    </div>
+
+    <div id="contenedor-buscador">
+        <div class="logo-google">
+            <span class="letra-1">J</span><span class="letra-2">a</span><span class="letra-3">q</span><span class="letra-4">u</span><span class="letra-5">e</span><span class="letra-6">Gle</span>
+        </div>
+        <div class="barra-busqueda">
+            <span class="icono-lupa">🔍</span>
+            <input type="text" id="input-busqueda" readonly>
+        </div>
+    </div>
+
+    <div id="contenedor-chat">
+        <div class="chat-header">Nuestro Baúl de Recuerdos 💌</div>
+        <div class="chat-mensajes" id="chat-mensajes">
+            </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Escribe tu respuesta aquí..." autocomplete="off">
+            <button class="btn-enviar-chat" onclick="verificarRespuesta()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal-saludo');
+        const contenedorBuscador = document.getElementById('contenedor-buscador');
+        const inputBusqueda = document.getElementById('input-busqueda');
+        const contenedorChat = document.getElementById('contenedor-chat');
+        const chatMensajes = document.getElementById('chat-mensajes');
+        const chatInput = document.getElementById('chat-input');
+        const inputArea = document.querySelector('.chat-input-area');
+
+        const textoABuscar = "Iniciando test de recuerdos de Alejandro y Jaqueline...";
+        let indexTexto = 0;
+        let preguntaActual = 0;
+
+        // ==========================================
+        // NUEVA ESTRUCTURA DE TRIVIA Y MENSAJES
+        // ==========================================
+        const trivia = [
+            {
+                tipo: 'mensaje',
+                texto: "Empecemos, en lo que te he dejado en la pagina están la mayoría de respuestas, así que si no sabes vuelve a ver los recuerdos o cartas.",
+            },
+            {
+                tipo: 'pregunta',
+                texto: "Para empezar mi niña... ¿Recuerdas la fecha exacta en la que nos conocimos por primera vez? (Ejemplo: 20 de mayo)",
+                respuestas: ["1 de febrero", "1ro de febrero", "primero de febrero", "1 febrero"]
+            },
+            {
+                tipo: 'pregunta',
+                texto: "¡Exacto! Ese día comenzó todo. Ahora cuéntame, ¿A dónde fuimos en nuestra primera cita oficial el 9 de junio?",
+                respuestas: ["cdu", "a jugar basket en cdu", "jugar basket", "jugamos basket"]
+            },
+            {
+                tipo: 'mensaje',
+                texto: "Bueno esa pregunta era capciosa pues no sabia si poner esa o donde te dije mi primer te quiero en persona jejeje",
+            },
+            {
+                tipo: 'pregunta',
+                texto: "Siguiente pregunta: ¿Qué día por fin te pedí formalmente ser mi novia?",
+                respuestas: ["1 de julio", "1ro de julio", "primero de julio", "1 julio"]
+            },
+            {
+                tipo: 'pregunta',
+                texto: "El día más hermoso de mi vida. ¿Recuerdas dónde fue esa cita?",
+                respuestas: ["en la tucson", "tucson", "parque de la tucson", "en un parque"]
+            },
+            {
+                tipo:'mensaje',
+                texto: "Recuerdo ese día, quería que todo fuera perfecto y aunque planeé varias cosas, conseguí lo más importante: tu sí. Continuando con las preguntas...",
+            },
+            {
+                tipo:'pregunta', 
+                texto: "Pasando a lo siguiente, ¿Qué día o cita, yo entendí que daría todo por ti hasta si eso me costaba la vida?",
+                respuestas: ["en la barranca", "la barranca ", "22 de julio", "en la barranca un 22 de julio"]
+            },
+            {
+                tipo: 'mensaje',
+                texto: "Correctoooooo. Bueno ese día como te lo he dicho múltiples veces, entendí que mi amor por ti era muy genuino y haría todo a mi alcance por tenerte con bien siempre.",
+            },
+            {
+                tipo:'pregunta', 
+                texto: "¿Cuál es la canción más especial en nuestra relación? (solo nombre de la canción no artista)",
+                respuestas: ["mirrors", "me hace tanto bien", "todo cambio", "gone gone gone", "me esta gustando", "el vino en tu boca", "aquel nap zzzz", "algo magico", "confieso"]
+            },
+            {
+                tipo:'pregunta', 
+                texto: "Última pregunta de momento, ¿Qué Canción sonaba en mi cabeza después de nuestra primer cita? ",
+                respuestas: ["estoy enamorado"]
+            }
+        ];
+
+        function normalizarTexto(texto) {
+            return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        }
+
+        function iniciarBuscador() {
+            modal.style.display = 'none';
+            contenedorBuscador.style.display = 'flex';
+            setTimeout(escribirTexto, 500);
+        }
+
+        function escribirTexto() {
+            if (indexTexto < textoABuscar.length) {
+                inputBusqueda.value += textoABuscar.charAt(indexTexto);
+                indexTexto++;
+                setTimeout(escribirTexto, 60); 
+            } else {
+                setTimeout(abrirChat, 1000);
+            }
+        }
+
+        function abrirChat() {
+            contenedorBuscador.style.display = 'none';
+            contenedorChat.style.display = 'flex';
+            hacerPregunta();
+        }
+
+        function agregarMensaje(texto, tipo) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('mensaje');
+            msgDiv.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
+            msgDiv.textContent = texto;
+            chatMensajes.appendChild(msgDiv);
+            chatMensajes.scrollTop = chatMensajes.scrollHeight; 
+        }
+
+        function hacerPregunta() {
+            if (preguntaActual < trivia.length) {
+                const itemActual = trivia[preguntaActual];
+                
+                // Mostramos el texto del bot
+                agregarMensaje(itemActual.texto, 'bot');
+
+                // Si es un MENSAJE, no esperamos respuesta. Pasamos al siguiente automáticamente.
+                if (itemActual.tipo === 'mensaje') {
+                    inputArea.style.display = 'none'; // Ocultamos la barra para que no escriba
+                    
+                    // Calculamos el tiempo de espera según lo largo que sea el mensaje
+                    const tiempoDeLectura = Math.max(2500, itemActual.texto.length * 50); 
+                    
+                    setTimeout(() => {
+                        preguntaActual++;
+                        hacerPregunta();
+                    }, tiempoDeLectura);
+                } 
+                // Si es una PREGUNTA, mostramos la barra y esperamos.
+                else {
+                    inputArea.style.display = 'flex';
+                    chatInput.focus(); // Ponemos el cursor automático para que escriba
+                }
+
+            } else {
+                // Final del juego
+                inputArea.style.display = 'none';
+                agregarMensaje("¡Has respondido todo perfecto mi niña! ❤️", 'bot');
+                setTimeout(() => {
+                    agregarMensaje("Quería recordarte todos estos momentos hermosos. Gracias por dejarme ser parte de tu vida. Cierra esta pestaña y sigue disfrutando de todo lo que preparé para ti.", 'bot');
+                }, 2000);
+            }
+        }
+
+        function verificarRespuesta() {
+            const respuestaUsuario = chatInput.value;
+            if (respuestaUsuario.trim() === '') return;
+
+            agregarMensaje(respuestaUsuario, 'user');
+            chatInput.value = '';
+
+            const respuestaLimpia = normalizarTexto(respuestaUsuario);
+            const itemActual = trivia[preguntaActual];
+            
+            let acerto = itemActual.respuestas.some(r => respuestaLimpia.includes(normalizarTexto(r)));
+
+            setTimeout(() => {
+                if (acerto) {
+                    preguntaActual++;
+                    hacerPregunta();
+                } else {
+                    agregarMensaje("Mmm no estoy tan seguro de eso... ¡Inténtalo de nuevo mi niña! Pista: Revisa que estés poniendo bien las palabras.", 'bot');
+                }
+            }, 800);
+        }
+
+        chatInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verificarRespuesta();
+            }
+        });
+    </script>
+</body>
+</html>

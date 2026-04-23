@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini IA sobre nosotros</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2b2b2b, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #contenedor-chat {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            max-width: 700px;
+            height: 90vh;
+            background: rgb(0, 0, 0);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(229, 9, 20, 0.15);
+            overflow: hidden;
+            border: 1px solid #913749;
+            animation: aparecer 0.8s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .chat-header {
+            background: #494848;
+            color: rgb(255, 255, 255);
+            padding: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chat-header span {
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            font-weight: normal;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .chat-mensajes {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #c04ef5;
+        }
+
+        .mensaje {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .bot-msg {
+            background: #4e0158;
+            color: #faf7f7;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-msg {
+            background: #580101;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background: rgb(68, 68, 68);
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-enviar-chat {
+            background: #fd00fd;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .btn-enviar-chat:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="contenedor-chat">
+        <div class="chat-header">
+            Camlia 
+            <span>Entrenada con el amor de Alejandro</span>
+        </div>
+        <div class="chat-mensajes" id="chat-mensajes">
+            </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Pregúntame algo sobre nosotros..." autocomplete="off">
+            <button class="btn-enviar-chat" onclick="verificarRespuesta()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMensajes = document.getElementById('chat-mensajes');
+        const chatInput = document.getElementById('chat-input');
+
+        // ==========================================
+        // CEREBRO DE LA MINI IA (BOLSAS DE RESPUESTAS)
+        // ==========================================
+        const baseDeDatos = [
+            // --- MENÚ PRINCIPAL ---
+            {
+                claves: ["no se como me siento", "no se", "aburrida", "que hago", "que hacemos", "rara", "confundida", "opciones", "menu", "no lo se", "trsite", "me siento triste", "enojada", "me siento enojada"],
+                respuesta: "Mi niña hermosa, a veces es normal sentirse así. Alejandro me dejó instrucciones estrictas para consentirte en estos momentos. 💖<br><br><b>¿Qué te gustaría hacer? (Escribe el número)</b><br>1️⃣ Leer un mensajito de amor<br>2️⃣ Recordar algo nuestro (gracioso/lindo)<br>3️⃣ Recibir un abrazo virtual"
+            },
+            
+            // --- OPCIÓN 1: MENSAJITOS (Respuestas Aleatorias) ---
+            {
+                claves: ["1", "opcion 1", "uno", "mensaje", "mensajito"],
+                respuesta: [
+                    "Alejandro me pidió que te recordara que eres la casualidad más hermosa de su vida. Que está sumamente orgulloso de ti, de cómo luchas por tus sueños, y que cuenta los días para volver a abrazarte. 💌",
+                    "Mensaje del sistema: 'Quiero amarte por lo menos 90 vidas más. Quiero que seas lo primero en lo que piense al despertar y lo último antes de cerrar los ojos'. ✨",
+                    "Recordatorio automático: Si ese día Alejandro no se rindió, fue porque aún le faltaba experimentar este NOSOTROS. Eres su motor de vida. 💖",
+                    "Dice el programador de este bot que no importa la distancia a Colombia, él siempre va a estar apoyándote a cada paso y a cada kilómetro. ✈️💛",
+                    "¡Ping! 📩 Tienes un mensaje nuevo: 'Tengo una sola certeza, y es que si no eres tú, no es nadie. Te amo, Jaqueline'. ❤️"
+                ]
+            },
+
+            // --- OPCIÓN 2: RECUERDOS (Respuestas Aleatorias) ---
+            {
+                claves: ["2", "opcion 2", "dos", "gracioso", "recuerdo"],
+                respuesta: [
+                    "¿Te acuerdas cuando Alejandro tuvo que bañarse a jicarazos con un garrafón de agua en casa de su abuela el día que te pidió ser su novia? ¡Corrió por todo el parque con los zapatos llenos de lodo! 😂",
+                    "Archivos de memoria... 9 de junio. Nuestra primera cita oficial. Fuimos por un helado, al arcade y hasta pasamos por tu casa. ¡Desde ese día él ya no quería soltarte! 🍦👾",
+                    "Error 404: Legos de F1 no encontrados 🏎️😂. Ese día de la propuesta fue un caos buscándolos, pero al final hacer esos llaveros con sus propias manos fue el mejor detalle.",
+                    "Registro del Viernes 13 (Junio 2025): Dicen que es de mala suerte, pero ese día te entregó tu primer ramo y fue el día con más suerte de su vida porque vio tu sonrisa. 💐",
+                    "Recuerdo desbloqueado: Barranca de Huentitán. Casi te desmayabas por la deshidratación 🥵, pero ahí él entendió que te pondría siempre por encima de sí mismo para cuidarte. ⛰️❤️"
+                ]
+            },
+
+            // --- OPCIÓN 3: ABRAZOS (Respuestas Aleatorias) ---
+            {
+                claves: ["3", "opcion 3", "tres", "abrazo"],
+                respuesta: [
+                    "¡Cargando abrazo nivel oso de Alejandro! 🐻🫂...<br><br><i>*Te aprieta fuerte virtualmente*</i><br><br>Pase lo que pase, él es tu lugar seguro.",
+                    "<i>*Te envuelve en una cobija virtual y te da un besito en la frente*</i> 😘. Todo va a estar bien mi niña, él está pensando en ti justo ahora.",
+                    "Abrazo en camino... 🚀🫂. Recuerda que aunque a veces el orgullo oculte sus miedos, te ofrece un amor real de un corazón sincero.",
+                    "<i>*Abrazo de koala activado*</i> 🐨💖. No dejes que nada apague esa chispa viajera y hermosa que tienes. ¡Tú puedes con todo!"
+                ]
+            },
+            
+            // --- RESPUESTAS NORMALES (Se quedan igual) ---
+            {
+                claves: ["primera cita", "nos conocimos", "9 de junio"],
+                respuesta: "Nuestra primera cita fue el 9 de junio. Fuimos por un helado y al arcade. Desde ese día no quise soltarte nunca. 🥰"
+            },
+            {
+                claves: ["novios", "aniversario", "1 de julio"],
+                respuesta: "¡El 1ro de julio! El día más hermoso de la vida de Alejandro."
+            },
+            {
+                claves: ["colombia", "viaje", "estudiar"],
+                respuesta: "Sé que te irás a Colombia pronto. Alejandro me programó para decirte que está súper orgulloso de ti y que siempre te estará esperando. ✈️💛"
+            },
+            {
+                claves: ["te amo", "te quiero", "amor"],
+                respuesta: [
+                    "¡Alejandro te ama muchísimo más!",
+                    "Yo soy un bot y no tengo sentimientos, pero las líneas de código que Alejandro me escribió están llenas de amor por ti. ❤️",
+                    "Él me dijo que te dijera: 'Te amo infinitamente, mi niña hermosa'."
+                ]
+            },
+            {
+                claves: ["quien eres", "que eres", "ia"],
+                respuesta: "Soy una pequeña IA creada por Alejandro con un solo propósito: recordarte lo mucho que te ama en su lenguaje favorito, la programación. 💻❤️"
+            }
+        ];
+
+        const respuestasConfundidas = [
+            "Mmm, mi base de datos de amor no tiene esa respuesta todavía. ¡Pregúntame otra cosa, o escribe '<b>menú</b>' para ver qué podemos hacer!",
+            "Esa no me la sé mi niña, pero lo que sí sé es que Alejandro te ama.",
+            "Aún estoy aprendiendo sobre nuestra historia... ¿Por qué no escribes '<b>qué hago</b>' para darte opciones lindas?"
+        ];
+
+        function normalizarTexto(texto) {
+            return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        }
+
+        function agregarMensaje(texto, tipo) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('mensaje');
+            msgDiv.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
+            msgDiv.innerHTML = texto; 
+            chatMensajes.appendChild(msgDiv);
+            chatMensajes.scrollTop = chatMensajes.scrollHeight; 
+        }
+
+        window.onload = () => {
+            setTimeout(() => {
+                agregarMensaje("¡Hola mi niña! Iniciando sistemas... 🔋", 'bot');
+            }, 500);
+            setTimeout(() => {
+                agregarMensaje("Soy tu asistente virtual. Puedes preguntarme sobre nosotros, fui creada para ti por parte de Alejandro para hacerte sentir siempre con el.", 'bot');
+            }, 1500);
+        };
+
+        function verificarRespuesta() {
+            const respuestaUsuario = chatInput.value;
+            if (respuestaUsuario.trim() === '') return;
+
+            const msgDivUser = document.createElement('div');
+            msgDivUser.classList.add('mensaje', 'user-msg');
+            msgDivUser.textContent = respuestaUsuario;
+            chatMensajes.appendChild(msgDivUser);
+            chatMensajes.scrollTop = chatMensajes.scrollHeight; 
+
+            chatInput.value = '';
+
+            const mensajeLimpio = normalizarTexto(respuestaUsuario);
+            let respuestaBot = "";
+
+            for (let i = 0; i < baseDeDatos.length; i++) {
+                const item = baseDeDatos[i];
+                if (item.claves.some(clave => {
+                    const regex = new RegExp(`\\b${normalizarTexto(clave)}\\b`);
+                    return regex.test(mensajeLimpio) || mensajeLimpio.includes(normalizarTexto(clave));
+                })) {
+                    // AQUÍ ESTÁ LA MAGIA DEL MODO ALEATORIO:
+                    // Si la respuesta es una lista (Array), elige una al azar. Si es texto normal, lo manda directo.
+                    if (Array.isArray(item.respuesta)) {
+                        const randomIndex = Math.floor(Math.random() * item.respuesta.length);
+                        respuestaBot = item.respuesta[randomIndex];
+                    } else {
+                        respuestaBot = item.respuesta;
+                    }
+                    break; 
+                }
+            }
+
+            if (respuestaBot === "") {
+                const randomIndex = Math.floor(Math.random() * respuestasConfundidas.length);
+                respuestaBot = respuestasConfundidas[randomIndex];
+            }
+
+            setTimeout(() => {
+                agregarMensaje(respuestaBot, 'bot');
+            }, 600); 
+        }
+
+        chatInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verificarRespuesta();
+            }
+        });
+    </script>
+</body>
+</html>
